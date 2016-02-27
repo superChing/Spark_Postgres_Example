@@ -6,6 +6,5 @@ import scala.concurrent.ExecutionContext.Implicits.global
 object Queries {
 
   def users: DBIO[Vector[Tables.User]] =
-    sql"select * from users".as[Tables.User]
-
+    sql"select * from user".as[Tables.User]
 }
