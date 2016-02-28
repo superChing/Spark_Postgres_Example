@@ -37,9 +37,9 @@ object Tables {
 
   def createGenra: DBIO[Int] =
     sqlu"""
-       CREATE TABLE genra(
+       CREATE TABLE genre(
          id integer NOT NULL,
-         genra varchar(255),
+         genre varchar(255),
          PRIMARY KEY (id)
        )
         """
@@ -58,9 +58,9 @@ object Tables {
 
   def createMovieGenra: DBIO[Int] =
     sqlu"""
-       CREATE TABLE movie_genra (
+       CREATE TABLE movie_genre (
          movie_id integer NOT NULL,
-         genra_id integer NOT NULL,
+         genre_id integer NOT NULL,
        )
         """
 
@@ -87,7 +87,7 @@ object Tables {
   }
 
   def insertGenras(genras: TraversableOnce[(Int, String)]): DBIO[Int] = {
-    def insert(genra: (Int, String)): DBIO[Int] = sqlu"insert into genra values (${genra._1},${genra._2})"
+    def insert(genra: (Int, String)): DBIO[Int] = sqlu"insert into genre values (${genra._1},${genra._2})"
     DBIO.sequence(genras.map(insert)).map(_.sum)
   }
 
@@ -98,10 +98,10 @@ object Tables {
   }
 
   def insertMovieGenra(movies: TraversableOnce[Movie]): DBIO[Int] = {
-    def insert(movie_id: Int, genra_id: Int): DBIO[Int] = sqlu"insert into movie_genra values (${movie_id},$genra_id)"
+    def insert(movie_id: Int, genre_id: Int): DBIO[Int] = sqlu"insert into movie_genre values (${movie_id},$genre_id)"
     DBIO.sequence(for {
       movie <- movies
-      genra_id <- movie.genraIds
+      genra_id <- movie.genreIds
     } yield insert(movie.id, genra_id)).map(_.sum)
   }
 

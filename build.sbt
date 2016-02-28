@@ -10,6 +10,9 @@ libraryDependencies ++= List(
   "com.typesafe.slick" %% "slick" % "3.1.0",
   "org.slf4j" % "slf4j-nop" % "1.7.10",
   "com.h2database" % "h2" % "1.4.187",
+  //"org.postgresql"   %  "postgresql"  % "9.4-1201-jdbc41"
+  "org.apache.spark" %% "spark-sql" % "1.6.0",
+
   "org.scalatest" %% "scalatest" % "2.2.4" % "test"
 )
 

@@ -5,6 +5,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Queries {
 
-  def users: DBIO[Vector[Tables.User]] =
-    sql"select * from user".as[Tables.User]
+  def userSize: DBIO[Vector[Int]] = sql"select COUNT(*) from user".as[Int]
+  def movieSize: DBIO[Vector[Int]] = sql"select COUNT(*) from movie".as[Int]
+  def ratingSize: DBIO[Vector[Int]] = sql"select COUNT(*) from rating".as[Int]
 }
