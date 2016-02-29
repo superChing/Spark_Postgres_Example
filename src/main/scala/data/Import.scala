@@ -14,6 +14,7 @@ object Import extends App {
 
   import Tables._
 
+  println("importing data into DB.")
   val createTables =
     createOccupation >> createUser >>
       createGenra >> createMovie >> createMovieGenra >>
@@ -30,7 +31,7 @@ object Import extends App {
       Queries.ratingSize.map(n => println(s"rating size: $n"))
 
   try {
-    Await.result(db.run(createTables >> importData >> query), 1.hour)
+    Await.result(db.run(createTables >> importData >> query), 30.minutes)
   } finally db.close
 }
 

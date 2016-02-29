@@ -1,6 +1,5 @@
 package data
 
-
 import scala.io
 
 /**

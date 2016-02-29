@@ -2,9 +2,9 @@ name := "SparkMovielens"
 
 version := "1.0"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.10.6"
 
-//mainClass in Compile := Some("")
+mainClass in Compile := Some("compute.Run")
 
 libraryDependencies ++= List(
   "com.typesafe.slick" %% "slick" % "3.1.0",

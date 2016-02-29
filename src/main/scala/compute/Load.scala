@@ -12,11 +12,11 @@ object DBConfig {
 }
 
 object Load {
-  def table(name:String)(implicit sqlContext: SQLContext): DataFrame = sqlContext.read
+  def apply(table:String)(implicit sqlContext: SQLContext): DataFrame = sqlContext.read
     .format("jdbc")
     .options(Map(
       "url" -> DBConfig.url,
       "driver" -> DBConfig.driver,
-      "dbtable" -> name))
+      "dbtable" -> table))
     .load
 }
