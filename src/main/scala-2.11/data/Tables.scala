@@ -16,7 +16,7 @@ object Tables {
 
   def createOccupation: DBIO[Int] =
     sqlu"""
-       CREATE TABLE occupation (
+       CREATE TABLE IF NOT EXISTS occupation (
          id integer NOT NULL,
          name varchar(255),
          PRIMARY KEY (id)
@@ -25,7 +25,7 @@ object Tables {
 
   def createUser: DBIO[Int] =
     sqlu"""
-       CREATE TABLE user (
+       CREATE TABLE IF NOT EXISTS users (
          id integer NOT NULL,
          age integer,
          gender char(1),
@@ -37,7 +37,7 @@ object Tables {
 
   def createGenra: DBIO[Int] =
     sqlu"""
-       CREATE TABLE genre(
+       CREATE TABLE IF NOT EXISTS genre (
          id integer NOT NULL,
          genre varchar(255),
          PRIMARY KEY (id)
@@ -46,7 +46,7 @@ object Tables {
 
   def createMovie: DBIO[Int] =
     sqlu"""
-       CREATE TABLE movie (
+       CREATE TABLE IF NOT EXISTS movie (
          id integer NOT NULL,
          title varchar(255),
          release_date varchar(255),
@@ -58,15 +58,15 @@ object Tables {
 
   def createMovieGenra: DBIO[Int] =
     sqlu"""
-       CREATE TABLE movie_genre (
+       CREATE TABLE IF NOT EXISTS movie_genre (
          movie_id integer NOT NULL,
-         genre_id integer NOT NULL,
+         genre_id integer NOT NULL
        )
         """
 
   def createRatings: DBIO[Int] =
     sqlu"""
-       CREATE TABLE rating (
+       CREATE TABLE IF NOT EXISTS rating (
          user_id integer NOT NULL,
          item_id integer NOT NULL,
          rating integer,
@@ -82,7 +82,7 @@ object Tables {
 
   def insertUsers(users: TraversableOnce[User]): DBIO[Int] = {
     def insert(u: User): DBIO[Int] =
-      sqlu"insert into user values (${u.id}, ${u.age}, ${u.gender}, ${u.occupation_id}, ${u.zip_code})"
+      sqlu"insert into users values (${u.id}, ${u.age}, ${u.gender}, ${u.occupation_id}, ${u.zip_code})"
     DBIO.sequence(users.map(insert)).map(_.sum)
   }
 

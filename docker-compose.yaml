@@ -1,0 +1,53 @@
+master:
+  image: catawiki/docker-spark
+  command: /usr/spark/bin/spark-class org.apache.spark.deploy.master.Master -h master
+  hostname: master
+  environment:
+    SPARK_CONF_DIR: /conf
+    SPARK_MASTER_IP: master
+    SPARK_MASTER_PORT: 7077
+  expose:
+    - 7001
+    - 7002
+    - 7003
+    - 7004
+    - 7005
+    - 7006
+    - 7077
+    - 6066
+  ports:
+    - 6066:6066     # cluster mode
+    - 4040:4040     # UI
+    - 8080:8080     # Master UI
+    - 7077:7077     # master
+  volumes:
+    - ./conf/master:/conf
+    - .:~/code
+
+worker:
+  image: catawiki/docker-spark
+  command: /usr/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
+  hostname: worker
+  environment:
+    SPARK_CONF_DIR: /conf
+  ports:
+    - 8081:8081  #UI
+  volumes:
+    - ./conf/worker:/conf
+  links:
+    - master
+    - postgres
+#  restart: on-failure
+
+postgres:
+  image: postgres:9.4
+  ports:
+    - "5432:5432"
+#  volumes:
+#    - /var/lib/postgresql/data
+  environment:
+    POSTGRES_USER: dev
+    POSTGRES_PASSWORD: dev
+    POSTGRES_DB: dev
+    PGDATA: /var/lib/postgresql/data
+

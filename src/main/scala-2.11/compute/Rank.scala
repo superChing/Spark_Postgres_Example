@@ -12,13 +12,13 @@ object Rank extends App {
   import sqlCtx.implicits._
   import org.apache.spark.sql.functions._
 
-  val df = Load.table("RATING")
-    .join(Load.table("MOVIE"), $"ITEM_ID" === $"ID", "inner").drop($"ID")
-    .join(Load.table("USER"), $"USER_ID" === $"ID", "inner").drop($"ID")
+  val df = Load.table("rating")
+    .join(Load.table("movie"), $"item_id" === $"id", "inner").drop($"id")
+    .join(Load.table("users"), $"user_id" === $"id", "inner").drop($"id")
 
-  df.groupBy($"ITEM_ID", $"TITLE").agg(count("*"),avg($"RATING"))
+  df.groupBy($"item_id", $"title").agg(count("*"),avg($"rating"))
     .orderBy($"count(1)".desc)
-    .drop($"ITEM_ID")
+    .drop($"item_id")
     .limit(10)
     .show()
 
