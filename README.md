@@ -6,7 +6,7 @@ Saprk is a standalone mode cluster in Docker.
 
 **RUN:**  
 
-wire the containers.  
+wire the containers and download the dataset.
 ```sudo docker-compose up -d```  
 
 import data to database.  
