@@ -1,7 +1,7 @@
 package compute
 
 import com.typesafe.config.ConfigFactory
-import org.apache.spark.sql.{DataFrame, SQLContext}
+import org.apache.spark.sql.SQLContext
 
 
 object DBConfig {
@@ -12,7 +12,9 @@ object DBConfig {
 }
 
 object Load {
-  def apply(table:String)(implicit sqlContext: SQLContext): DataFrame = sqlContext.read
+  println(s"connecting to ${DBConfig.url}")
+
+  def apply(table: String)(implicit sqlContext: SQLContext) = sqlContext.read
     .format("jdbc")
     .options(Map(
       "url" -> DBConfig.url,

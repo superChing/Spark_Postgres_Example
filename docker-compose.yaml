@@ -1,3 +1,10 @@
+myapp:
+  build: .
+  links:
+    - master
+    - postgres
+  command: echo 'hello'
+
 master:
 #  image: catawiki/docker-spark
   image: gettyimages/spark
@@ -24,6 +31,8 @@ master:
   volumes:
     - ./conf/master:/conf
     - .:/code
+  links:
+    - postgres
 
 worker:
 #  image: catawiki/docker-spark

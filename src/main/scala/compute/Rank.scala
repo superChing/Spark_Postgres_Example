@@ -22,7 +22,7 @@ object Rank {
     df.groupBy($"item_id", $"title").agg(count("*"), avg($"rating"))
       .orderBy($"count(1)".desc)
       .drop($"item_id")
-      .limit(10)
+      .limit(20)
       .show()
   }
 }
