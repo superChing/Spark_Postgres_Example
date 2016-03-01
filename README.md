@@ -4,7 +4,8 @@ Example of Spark + PostgreSQL on Movielens data
 Compute top 20 movies of Movielens data (ml-100k), using Spark and PostgreSQL. 
 Saprk is a standalone mode cluster in Docker.
 
-**RUN:**  
+**RUN:**
+`sbt assembly`  
 
 wire the containers and download the dataset.  
 ```sudo docker-compose up -d```  
